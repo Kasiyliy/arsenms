@@ -13,6 +13,7 @@ import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {ErrorInterceptor} from './shared/interceptors/error';
 import {TokenInterceptor} from './shared/interceptors/token';
 import {QRCodeModule} from 'angular2-qrcode';
+import {QRScanner} from '@ionic-native/qr-scanner/ngx';
 
 @NgModule({
     declarations: [AppComponent],
@@ -28,6 +29,7 @@ import {QRCodeModule} from 'angular2-qrcode';
     ],
     providers: [
         StatusBar,
+        QRScanner,
         SplashScreen,
 
         { provide: RouteReuseStrategy, useClass: IonicRouteStrategy },

@@ -1,1 +1,41 @@
+ion-content {
+  --background: var(--ion-background-color, transparent);
+}
 
+#close-scanner-button {
+  display: none;
+}
+
+html.qr-scanner-open {
+
+  ion-app,
+  ion-content {
+    height: 70px !important;
+  }
+
+  ion-content {
+    --overflow: hidden !important;
+  }
+
+  ion-header,
+  ion-footer,
+  ion-content > *:not(#close-scanner-button) {
+    display: none;
+  }
+
+  #close-scanner-button {
+    display: block;
+  }
+}
+
+app-camera {
+  .transparent-zone {
+    width: 100%;
+    min-height: 200px;
+    background-color: transparent !important;
+  }
+}
+
+.qrscan-transparent {
+  background-color: transparent !important;
+}
