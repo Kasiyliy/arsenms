@@ -1,0 +1,44 @@
+<ion-header>
+  <ion-toolbar color="primary">
+    <ion-title>
+      Account
+    </ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+
+  <ion-progress-bar type="indeterminate" *ngIf="loading"></ion-progress-bar>
+  <ion-card>
+    <p style="margin: 20px">{{now | date:'medium'}}</p>
+  </ion-card>
+  <ion-card>
+    <ion-item>
+      <ion-button  class="ion-text-end" [routerLink]="'/auth'" >
+        <ion-icon name="log-out"></ion-icon>
+        Logout
+      </ion-button>
+    </ion-item>
+    <div *ngIf="user">
+      <ion-item >
+        <ion-label>
+          <ion-icon name="contact" slot="start"></ion-icon>
+        </ion-label>
+        <ion-text>{{user.first_name + ' ' + user.last_name}}</ion-text>
+      </ion-item>
+      <ion-item >
+        <ion-label>
+          <ion-icon name="mail" slot="start"></ion-icon>
+        </ion-label>
+        <ion-text>{{user.email}}</ion-text>
+      </ion-item>
+      <ion-item >
+        <ion-label>
+          <ion-icon name="cash" slot="start"></ion-icon>
+        </ion-label>
+        <ion-text>{{user.balance}} KZT</ion-text>
+      </ion-item>
+    </div>
+  </ion-card>
+
+</ion-content>

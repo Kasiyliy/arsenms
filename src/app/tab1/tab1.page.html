@@ -1,0 +1,20 @@
+<ion-header>
+  <ion-toolbar color="primary">
+    <ion-title>
+      My QR code
+    </ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+    <ion-card class="welcome-card">
+     <ion-card-header>
+        <ion-card-subtitle>Account</ion-card-subtitle>
+        <ion-card-title text-center>Welcome to TMS IITU</ion-card-title>
+      </ion-card-header>
+      <ion-card-content>
+        <p text-center>Your QR code</p>
+      <qr-code *ngIf="currentUser" [value]="currentUser.id+''" [size]="250"></qr-code>
+      </ion-card-content>
+    </ion-card>
+</ion-content>

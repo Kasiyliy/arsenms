@@ -1,0 +1,66 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>
+      Registration
+    </ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content padding>
+  <ion-card>
+    <ion-card-content>
+
+      <form action="#" class="ho-form ho-form-boxed" [formGroup]="registerForm">
+        <ion-card-content>
+          <ion-label>Registration form</ion-label>
+          <ion-item>
+            <ion-label position="floating">Email</ion-label>
+            <ion-input formControlName="email"></ion-input>
+            <div class="text-danger" *ngIf="registerForm.controls['email'].errors?.required && !registerForm.controls['email'].pristine">
+              Enter email
+            </div>
+          </ion-item>
+
+          <ion-item>
+            <ion-label position="floating">Name</ion-label>
+            <ion-input formControlName="name"></ion-input>
+            <div class="text-danger" *ngIf="registerForm.controls['name'].errors?.required && !registerForm.controls['name'].pristine">
+              Enter name
+            </div>
+          </ion-item>
+
+
+
+          <ion-item>
+            <ion-label position="floating">Password</ion-label>
+            <ion-input [type]="'password'" formControlName="password"></ion-input>
+            <div class="text-danger" *ngIf="registerForm.controls['password'].errors?.required && !registerForm.controls['password'].pristine">
+              Password is required
+            </div>
+          </ion-item>
+
+          <ion-item>
+            <ion-label position="floating">Repeat password</ion-label>
+            <ion-input [type]="'password'" formControlName="cpassword"></ion-input>
+            <div class="text-danger" *ngIf="registerForm.controls['cpassword'].errors?.required && !registerForm.controls['cpassword'].pristine">
+              Passwords should be equal
+            </div>
+          </ion-item>
+
+        </ion-card-content>
+
+        <ion-button [disabled]="!registerForm.valid" (click)="register()"
+                    [ngClass]="{'disabled' : !registerForm.valid}"
+                    expand="block">Register</ion-button>
+
+        <div style="float: right">
+          <ion-label>Already registered?</ion-label>
+          <ion-button size="small" routerDirection="back" routerLink="/auth" fill="clear">Login</ion-button>
+        </div>
+
+      </form>
+    </ion-card-content>
+  </ion-card>
+
+
+</ion-content>
