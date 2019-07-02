@@ -1,0 +1,53 @@
+<ion-header>
+    <ion-toolbar color="primary">
+        <ion-title>
+            History
+        </ion-title>
+    </ion-toolbar>
+</ion-header>
+
+<ion-content>
+
+    <ion-progress-bar type="indeterminate" *ngIf="loading"></ion-progress-bar>
+    <ion-card>
+        <ion-item>
+            <ion-button class="ion-text-end" (click)="fetchAll()">
+                <ion-icon name="refresh"></ion-icon>
+                Refresh
+            </ion-button>
+        </ion-item>
+        <div *ngIf="user">
+            <ion-item>
+                <ion-label>
+                    <ion-icon name="contact" slot="start"></ion-icon>
+                </ion-label>
+                <ion-text>{{user.first_name + ' ' + user.last_name}}</ion-text>
+            </ion-item>
+
+            <ion-item-divider></ion-item-divider>
+        </div>
+    </ion-card>
+
+
+    <ion-card *ngFor="let deal of deals">
+        <ion-card-header>
+            <ion-card-subtitle>Sender: {{deal.sender.first_name + ' ' + deal.sender.last_name}}</ion-card-subtitle>
+            <ion-card-title>Receiver: {{deal.receiver.first_name + ' ' + deal.receiver.last_name}}</ion-card-title>
+        </ion-card-header>
+
+        <ion-card-content>
+            <ion-list>
+                <ion-item>
+                    Amount: {{deal.amount}}
+                </ion-item>
+                <ion-item>
+                    Date: {{deal.created_at}}
+                </ion-item>
+                <ion-item>
+                    Type: {{deal.type}}
+                </ion-item>
+            </ion-list>
+        </ion-card-content>
+    </ion-card>
+
+</ion-content>

@@ -28,6 +28,6 @@ export class DealService {
     public getMyTransactions(id: number) {
         let httpParams = new HttpParams();
         httpParams = httpParams.append('id', id + '');
-        return this.http.get<Deal>(this.fullUrl + '/deal/user', {params: httpParams});
+        return this.http.get<any>(this.fullUrl + '/deals/user', {params: httpParams});
     }
 }

@@ -1,6 +1,6 @@
 import {Component} from '@angular/core';
 import {QRScanner, QRScannerStatus} from '@ionic-native/qr-scanner/ngx';
-import {Platform} from '@ionic/angular';
+import {AlertController, Platform} from '@ionic/angular';
 import {ToastService} from '../services/toast.service';
 import {Deal} from '../shared/models/deal';
 import {UserService} from '../services/user.service';
@@ -24,10 +24,12 @@ export class Tab2Page {
         private qrScanner: QRScanner,
         private userService: UserService,
         private dealService: DealService,
+        private alertController: AlertController
     ) {
         this.userService.currentUser().subscribe(perf => {
             this.currentUser = perf.success;
         });
+
     }
 
     startScanner() {
@@ -38,15 +40,8 @@ export class Tab2Page {
                     this.isOn = true;
                     this.toastService.presentDarkToast('Started to scan!');
                     const scanSub = this.qrScanner.scan().subscribe((text: string) => {
-                        const deal = new Deal();
-                        deal.receiver_id = parseInt(text, 10);
-                        deal.sender_id = this.currentUser.id;
-                        deal.type = DealTypes.PURCHASE;
-                        deal.amount = 2000;
-                        deal.password = '11223344';
-                        this.dealService.purchase(deal).subscribe(p => {
-                            this.toastService.presentSuccessToast(p.success);
-                        });
+                        this.toastService.presentInfoToast(text);
+                        this.presentAlertPrompt(parseInt(text, 10));
                         this.qrScanner.hide(); // hide camera preview
                         scanSub.unsubscribe(); // stop scanning
                     });
@@ -64,5 +59,58 @@ export class Tab2Page {
 
     closeQr() {
         this.qrScanner.destroy();
+    }
+
+    async presentAlertPrompt(id) {
+        const alert = await this.alertController.create({
+            header: 'Make transaction!',
+            inputs: [
+                {
+                    name: 'price',
+                    type: 'number',
+                    placeholder: 'Enter amount:'
+                },
+                {
+                    name: 'password',
+                    type: 'password',
+                    placeholder: 'Enter password:'
+                },
+            ],
+            buttons: [
+                {
+                    text: 'Cancel',
+                    role: 'cancel',
+                    cssClass: 'secondary',
+                    handler: () => {
+                        console.log('Confirm Cancel');
+                    }
+                }, {
+                    text: 'Ok',
+                    handler: (data) => {
+                        const deal = new Deal();
+                        deal.receiver_id = id;
+                        deal.sender_id = this.currentUser.id;
+                        deal.type = DealTypes.PURCHASE;
+                        deal.amount = data.price;
+                        deal.password = data.password;
+                        this.userService.currentUser().subscribe(perf => {
+                            this.currentUser = perf.success;
+
+                            if (this.currentUser.balance - parseInt(data.price, 10) >= 0) {
+                                this.dealService.purchase(deal).subscribe(p => {
+                                    this.toastService.presentDarkToast('Your transaction is success!');
+                                }, error => {
+                                    this.toastService.presentDangerToast('Error while making a transaction!');
+                                });
+                            } else {
+                                this.toastService.presentDangerToast('Not enough balance!');
+                            }
+                        });
+                    }
+                }
+            ]
+        });
+
+        await alert.present();
     }
 }

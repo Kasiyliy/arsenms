@@ -18,6 +18,11 @@
         <ion-icon name="log-out"></ion-icon>
         Logout
       </ion-button>
+
+      <ion-button  class="ion-text-end" (click)="fetchAll()">
+        <ion-icon name="refresh"></ion-icon>
+        Refresh
+      </ion-button>
     </ion-item>
     <div *ngIf="user">
       <ion-item >
